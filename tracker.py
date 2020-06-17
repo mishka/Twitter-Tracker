@@ -15,14 +15,19 @@ CHAT_ID = 'your telegram chat id'
 TOKEN = 'telegram api bot token'
 
 
-def telegram(text):
-    log(f'Sending --> {text}')
-    post(f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={CHAT_ID}&text={qt(text)}&parse_mode=markdown')
-
-
 def log(text):
     time = datetime.now().strftime('%H:%M:%S')
     print(f'| {time} | {text}')
+
+
+def get_username(user_id):
+    r = post("https://tweeterid.com/ajax.php", data = {'input': user_id}).text
+    return r[1:]
+
+
+def telegram(text):
+    log(f'Sending --> {text}')
+    post(f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={CHAT_ID}&text={qt(text)}&parse_mode=markdown')
 
 
 def json_rw(read, content = None):
@@ -42,11 +47,6 @@ def json_rw(read, content = None):
     except FileNotFoundError:
         open(JSON_FILENAME, 'w').close()
         return json.loads('{}')
-
-
-def get_username(user_id):
-    r = post("https://tweeterid.com/ajax.php", data = {'input': user_id}).text
-    return r[1:]
 
 
 def fetch(username = None, userID = None):
