@@ -26,17 +26,21 @@ def log(text):
 
 def json_rw(read, content = None):
     file_mode = 'r+' if read else 'w'
+    
+    try:
+        with open(JSON_FILENAME, file_mode) as f:
+            if not read:
+                json.dump(content, f, indent = 4, sort_keys = True, ensure_ascii=False)
+                return
 
-    with open(JSON_FILENAME, file_mode) as f:
-        if not read:
-            json.dump(content, f, indent = 4, sort_keys = True, ensure_ascii=False)
-            return
+            if not f.read(1):
+                return json.loads('{}')
 
-        if not f.read(1):
-            return json.loads('{}')
-
-        f.seek(0)
-        return json.loads(f.read())
+            f.seek(0)
+            return json.loads(f.read())
+    except FileNotFoundError:
+        open(JSON_FILENAME, 'w').close()
+        return json.loads('{}')
 
 
 def fetch(username = None, userID = None):
@@ -67,6 +71,7 @@ def fetch(username = None, userID = None):
 
             db[name] = value
     else:
+        msg = ''
         for template, name, is_diff in values:
             value = getattr(profile, name)
 
@@ -77,11 +82,19 @@ def fetch(username = None, userID = None):
                 continue
 
             if is_diff:
-                diff = value - db[name]
+                diff = str(value - db[name])
+                
+                if not '-' in diff:
+                    diff = f'+{diff}'
+                
+                diff = f'{value} ({diff})'
 
             db[name] = value
 
-            telegram(f'{template}: `{diff}`')
+            msg += f'`{template}:` {diff}\n' if is_diff else f'`{template}:` {value}\n'
+
+        if msg:
+            telegram(msg)
 
     json_rw(0, db)
 
