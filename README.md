@@ -10,5 +10,5 @@ Edit the `CHAT_ID`, `USERNAME, USERID`, `TOKEN` variables accordingly.
 
 
 # Things to do
-- [ ] Create the `db.json` file automatically if it doesn't exist.
+- [x] Create the `db.json` file automatically if it doesn't exist.
 - [ ] Use the `user ID` instead of the `username` so even if the user changes it's username, you will still be able to track them.
