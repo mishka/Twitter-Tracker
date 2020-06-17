@@ -1,5 +1,5 @@
 # Twitter-Tracker
-Tracks a private user's basic activity without using the Twitter API and receive notifications through Telegram.
+Tracks a private user's basic activity without using the Twitter API to receive notifications through Telegram.
 
 # Requirements
  - [requests](https://github.com/psf/requests)
