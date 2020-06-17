@@ -5,18 +5,19 @@ from datetime import datetime
 from urllib.parse import quote as qt
 from twitter_scraper import Profile
 
-
-# https://twitter.com/i/user/xxx
-CHAD_ID = 'your telegram chat id'
-USERNAME, USERID = 'username', 000000000000 # twitter username and userID
-TOKEN = 'telegram api bot token'
-SLEEP_INTERVAL = 90 # how often you want it to check in seconds
 JSON_FILENAME = 'db.json'
+SLEEP_INTERVAL = 90 # how often you want it to check in seconds
+
+USERNAME = '' # enter twitter username here
+USERID =  0000 # enter twitter userID here, see --> https://tweeterid.com/
+
+CHAT_ID = 'your telegram chat id'
+TOKEN = 'telegram api bot token'
 
 
 def telegram(text):
     log(f'Sending --> {text}')
-    post(f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={CHAD_ID}&text={qt(text)}&parse_mode=markdown')
+    post(f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={CHAT_ID}&text={qt(text)}&parse_mode=markdown')
 
 
 def log(text):
@@ -26,7 +27,7 @@ def log(text):
 
 def json_rw(read, content = None):
     file_mode = 'r+' if read else 'w'
-    
+
     try:
         with open(JSON_FILENAME, file_mode) as f:
             if not read:
@@ -41,6 +42,11 @@ def json_rw(read, content = None):
     except FileNotFoundError:
         open(JSON_FILENAME, 'w').close()
         return json.loads('{}')
+
+
+def get_username(user_id):
+    r = post("https://tweeterid.com/ajax.php", data = {'input': user_id}).text
+    return r[1:]
 
 
 def fetch(username = None, userID = None):
@@ -98,6 +104,7 @@ def fetch(username = None, userID = None):
 
     json_rw(0, db)
 
+USERNAME = get_username(USERID) if not USERNAME else USERNAME
 
 while(1):
     try:
