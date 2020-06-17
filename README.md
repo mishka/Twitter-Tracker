@@ -5,7 +5,7 @@ Tracks a private user's basic activity without using the Twitter API to receive 
  - [requests](https://github.com/psf/requests)
  - [twitter-scraper](https://github.com/bisguzar/twitter-scraper)  
    
- Notes about twitter-scraper; the pip package seems outdated as of 17/06/2020, so please do a manual installation from the github repo for the time being.
+ Notes about `twitter-scraper`; the pip package seems outdated as of 17/06/2020, so please do a manual installation from the github repo for the time being.
 
 # How to set it up
 ## Variables
