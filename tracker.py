@@ -49,11 +49,7 @@ def json_rw(read, content = None):
         return json.loads('{}')
 
 
-def fetch(username = None, userID = None):
-    user = username or userID
-    profile = Profile(user)
-    db = json_rw(1)
-
+def fetch(username):
     values = (
         ('Name',          'name',            0),
         ('Website',       'website',         0),
@@ -68,6 +64,9 @@ def fetch(username = None, userID = None):
         ('Following',     'following_count', 1),
         ('Followers',     'followers_count', 1)
     )
+
+    profile = Profile(username)
+    db = json_rw(1)
 
     if not db:
         for _, name, __ in values:
