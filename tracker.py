@@ -59,6 +59,7 @@ def fetch(username):
         ('Private',       'is_private',      0),
         ('Profile Photo', 'profile_photo',   0),
         ('Banner Photo',  'banner_photo',    0),
+        ('Location',      'location',        0),
         ('Likes',         'likes_count',     1),
         ('Tweets',        'tweets_count',    1),
         ('Following',     'following_count', 1),
@@ -68,10 +69,12 @@ def fetch(username):
     profile = Profile(username)
     db = json_rw(1)
 
+    str_list = ['birthday', 'is_private', 'website']
+
     if not db:
         for _, name, __ in values:
             value = getattr(profile, name)
-            if name == 'birthday' or name == 'is_private' or name == 'website':
+            if name in str_list:
                 value = str(value)
 
             db[name] = value
@@ -80,7 +83,7 @@ def fetch(username):
         for template, name, is_diff in values:
             value = getattr(profile, name)
 
-            if name == 'birthday' or name == 'is_private' or name == 'website':
+            if name in str_list:
                 value = str(value)
 
             if value == db[name]:
