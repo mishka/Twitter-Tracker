@@ -20,6 +20,4 @@ You can create a bot through [@BotFather](https://telegram.me/BotFather)
 You can learn about your chat ID by messaging `/my_id` to the [@get_id_bot](https://telegram.me/get_id_bot) on telegram.
 
 # Things to do
-- [x] Create the `db.json` file automatically if it doesn't exist.
-- [x] Use the `user ID` instead of the `username` so even if the user changes it's username, it will still be possible to track them.
 - [ ] Log the activities with timestamps in a csv file so it can be used for analysis purposes later.
